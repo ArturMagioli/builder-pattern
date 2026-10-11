@@ -51,6 +51,8 @@ public class User {
     }
 
     public static class UserBuilder {
+        private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
         private String nome;
         private String email;
         private boolean ativo;
@@ -60,13 +62,26 @@ public class User {
         private Endereco endereco; //opcional
 
         public UserBuilder nome(String nome) {
+            if (nome.isEmpty()) {
+                throw new RuntimeException("O nome do usuário não deve ser vazio");
+            }
             this.nome = nome;
             return this;
         }
 
         public UserBuilder email(String email) {
+            if (email.isEmpty()) {
+                throw new RuntimeException("O campo email deve ser preenchido");
+            }
+            if (!emailValido(email)) {
+                throw new RuntimeException("O campo email está com formato inválido");
+            }
             this.email = email;
             return this;
+        }
+
+        private boolean emailValido(String email) {
+            return email.matches(EMAIL_REGEX);
         }
 
         public UserBuilder ativo() {
