@@ -23,7 +23,7 @@ public class UserTest {
     }
 
     @Test
-    public void candidatoEstaAtivoEComCurriculo() {
+    public void usuarioPodeSeCandidatar() {
         User user = new User.UserBuilder()
                 .nome("Bruno Henrique Santos")
                 .email("bruno@gmail.com")
@@ -31,7 +31,19 @@ public class UserTest {
                 .ativo()
                 .curriculo(cv)
                 .build();
-        assert (user.getPermissao().equals(Permissao.CANDIDATO) && user.isAtivo() && user.getCurriculo() != null);
+        assert (user.podeCandidatar());
+    }
+
+    @Test void usuarioPodeSeCandidatarParaVagaPresencial() {
+        User user = new User.UserBuilder()
+                .nome("Maria Ferreira Souza")
+                .email("maria@gmail.com")
+                .comPermissao(Permissao.CANDIDATO)
+                .ativo()
+                .endereco(end)
+                .build();
+
+        assert (user.presencial());
     }
 
     //sem obrigação de lembrar a ordem dos construtores, sem obrigação de passar null, mais legível.

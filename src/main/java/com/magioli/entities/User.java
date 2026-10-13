@@ -50,6 +50,14 @@ public class User {
         return endereco;
     }
 
+    public boolean podeCandidatar() {
+        return ativo == true && getPermissao() == Permissao.CANDIDATO && curriculo != null;
+    }
+
+    public boolean presencial() {
+        return ativo == true && getPermissao() == Permissao.CANDIDATO && endereco != null;
+    }
+
     public static class UserBuilder {
         private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
